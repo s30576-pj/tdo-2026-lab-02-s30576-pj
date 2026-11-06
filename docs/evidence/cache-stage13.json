@@ -1,0 +1,82 @@
+[
+  {
+    "label": "cold",
+    "run": 42290040632,
+    "job": "Backend",
+    "sha": "52fc352faae7471ce777609cec5bb3417602f2ab",
+    "keyLog": "Backend\tCache NuGet\t2026-11-06T20:38:29.1927288Z   key: lab02-v1-Linux-X64-dotnet-10.0.403-c8c78f5cb637dcf073e36b4970be07c05d09e9b82ad70aeffdf215137dbe95f6\nBackend\tCache NuGet\t2026-11-06T20:38:29.4210437Z Cache not found for input keys: lab02-v1-Linux-X64-dotnet-10.0.403-c8c78f5cb637dcf073e36b4970be07c05d09e9b82ad70aeffdf215137dbe95f6\nBackend\tPost Cache NuGet\t2026-11-06T20:39:14.9987169Z Cache saved with key: lab02-v1-Linux-X64-dotnet-10.0.403-c8c78f5cb637dcf073e36b4970be07c05d09e9b82ad70aeffdf215137dbe95f6",
+    "hitLog": "Backend\tWynik cache NuGet\t2026-11-06T20:38:29.4367750Z Exact cache hit = false",
+    "installationSeconds": 6.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "cold",
+    "run": 42290040632,
+    "job": "Frontend",
+    "sha": "52fc352faae7471ce777609cec5bb3417602f2ab",
+    "keyLog": "Frontend\tCache npm\t2026-11-06T20:38:32.5809688Z   key: lab02-v1-Linux-X64-node-v26.1.0-bf75e17921026297dc115f2b9b1a39416dcd613adf01852b3d7a79dd0828e2c4\nFrontend\tCache npm\t2026-11-06T20:38:32.9465040Z Cache not found for input keys: lab02-v1-Linux-X64-node-v26.1.0-bf75e17921026297dc115f2b9b1a39416dcd613adf01852b3d7a79dd0828e2c4\nFrontend\tPost Cache npm\t2026-11-06T20:38:57.6434301Z Cache saved with key: lab02-v1-Linux-X64-node-v26.1.0-bf75e17921026297dc115f2b9b1a39416dcd613adf01852b3d7a79dd0828e2c4",
+    "hitLog": "Frontend\tWynik cache npm\t2026-11-06T20:38:32.9640279Z Exact cache hit = false",
+    "installationSeconds": 9.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "warm",
+    "run": 42290187724,
+    "job": "Frontend",
+    "sha": "52fc352faae7471ce777609cec5bb3417602f2ab",
+    "keyLog": "Frontend\tCache npm\t2026-11-06T20:39:37.4506218Z   key: lab02-v1-Linux-X64-node-v26.1.0-bf75e17921026297dc115f2b9b1a39416dcd613adf01852b3d7a79dd0828e2c4\nFrontend\tCache npm\t2026-11-06T20:39:38.5716430Z Cache restored from key: lab02-v1-Linux-X64-node-v26.1.0-bf75e17921026297dc115f2b9b1a39416dcd613adf01852b3d7a79dd0828e2c4",
+    "hitLog": "Frontend\tWynik cache npm\t2026-11-06T20:39:38.5939608Z Exact cache hit = true",
+    "installationSeconds": 7.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "warm",
+    "run": 42290187724,
+    "job": "Backend",
+    "sha": "52fc352faae7471ce777609cec5bb3417602f2ab",
+    "keyLog": "Backend\tCache NuGet\t2026-11-06T20:39:39.6791158Z   key: lab02-v1-Linux-X64-dotnet-10.0.403-c8c78f5cb637dcf073e36b4970be07c05d09e9b82ad70aeffdf215137dbe95f6\nBackend\tCache NuGet\t2026-11-06T20:39:41.1920198Z Cache restored from key: lab02-v1-Linux-X64-dotnet-10.0.403-c8c78f5cb637dcf073e36b4970be07c05d09e9b82ad70aeffdf215137dbe95f6",
+    "hitLog": "Backend\tWynik cache NuGet\t2026-11-06T20:39:41.2140347Z Exact cache hit = true",
+    "installationSeconds": 4.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "newlock",
+    "run": 42290532119,
+    "job": "Frontend",
+    "sha": "65ceeebbca70fb12badf6f7cccf5e6a02acf6c00",
+    "keyLog": "Frontend\tCache npm\t2026-11-06T20:42:05.4649807Z   key: lab02-v1-Linux-X64-node-v26.1.0-a825b30107e40dbe34169be45051222a4684cf602856097520c54b007af0a5f8\nFrontend\tCache npm\t2026-11-06T20:42:05.6479682Z Cache not found for input keys: lab02-v1-Linux-X64-node-v26.1.0-a825b30107e40dbe34169be45051222a4684cf602856097520c54b007af0a5f8\nFrontend\tPost Cache npm\t2026-11-06T20:42:28.4881965Z Cache saved with key: lab02-v1-Linux-X64-node-v26.1.0-a825b30107e40dbe34169be45051222a4684cf602856097520c54b007af0a5f8",
+    "hitLog": "Frontend\tWynik cache npm\t2026-11-06T20:42:05.6659636Z Exact cache hit = false",
+    "installationSeconds": 9.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "newlock",
+    "run": 42290532119,
+    "job": "Backend",
+    "sha": "65ceeebbca70fb12badf6f7cccf5e6a02acf6c00",
+    "keyLog": "Backend\tCache NuGet\t2026-11-06T20:42:04.2699188Z   key: lab02-v1-Linux-X64-dotnet-10.0.403-a20f7ebebe777f64d497d2c793317c53217e288abe69997a37b8c8d2e02c7d53\nBackend\tCache NuGet\t2026-11-06T20:42:04.4940479Z Cache not found for input keys: lab02-v1-Linux-X64-dotnet-10.0.403-a20f7ebebe777f64d497d2c793317c53217e288abe69997a37b8c8d2e02c7d53\nBackend\tPost Cache NuGet\t2026-11-06T20:42:55.3029381Z Cache saved with key: lab02-v1-Linux-X64-dotnet-10.0.403-a20f7ebebe777f64d497d2c793317c53217e288abe69997a37b8c8d2e02c7d53",
+    "hitLog": "Backend\tWynik cache NuGet\t2026-11-06T20:42:04.5113668Z Exact cache hit = false",
+    "installationSeconds": 6.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "namespace",
+    "run": 42290717724,
+    "job": "Frontend",
+    "sha": "c14dcb10d5ea385f4e7a4aeb78f6893cf0b58598",
+    "keyLog": "Frontend\tCache npm\t2026-11-06T20:43:29.5046838Z   key: lab02-v2-Linux-X64-node-v26.1.0-a825b30107e40dbe34169be45051222a4684cf602856097520c54b007af0a5f8\nFrontend\tCache npm\t2026-11-06T20:43:29.8371822Z Cache not found for input keys: lab02-v2-Linux-X64-node-v26.1.0-a825b30107e40dbe34169be45051222a4684cf602856097520c54b007af0a5f8\nFrontend\tPost Cache npm\t2026-11-06T20:43:49.3166984Z Cache saved with key: lab02-v2-Linux-X64-node-v26.1.0-a825b30107e40dbe34169be45051222a4684cf602856097520c54b007af0a5f8",
+    "hitLog": "Frontend\tWynik cache npm\t2026-11-06T20:43:29.8524872Z Exact cache hit = false",
+    "installationSeconds": 7.0,
+    "conclusion": "success"
+  },
+  {
+    "label": "namespace",
+    "run": 42290717724,
+    "job": "Backend",
+    "sha": "c14dcb10d5ea385f4e7a4aeb78f6893cf0b58598",
+    "keyLog": "Backend\tCache NuGet\t2026-11-06T20:43:24.8598712Z   key: lab02-v2-Linux-X64-dotnet-10.0.403-a20f7ebebe777f64d497d2c793317c53217e288abe69997a37b8c8d2e02c7d53\nBackend\tCache NuGet\t2026-11-06T20:43:25.2259608Z Cache not found for input keys: lab02-v2-Linux-X64-dotnet-10.0.403-a20f7ebebe777f64d497d2c793317c53217e288abe69997a37b8c8d2e02c7d53\nBackend\tPost Cache NuGet\t2026-11-06T20:44:20.0525058Z Cache saved with key: lab02-v2-Linux-X64-dotnet-10.0.403-a20f7ebebe777f64d497d2c793317c53217e288abe69997a37b8c8d2e02c7d53",
+    "hitLog": "Backend\tWynik cache NuGet\t2026-11-06T20:43:25.2441090Z Exact cache hit = false",
+    "installationSeconds": 6.0,
+    "conclusion": "success"
+  }
+]
