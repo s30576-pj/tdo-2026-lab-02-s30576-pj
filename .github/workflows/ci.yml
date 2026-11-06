@@ -28,6 +28,8 @@ permissions:
 jobs:
   backend:
     name: Backend
+    outputs:
+      report_name: ${{ steps.metadata.outputs.report_name }}
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -43,6 +45,15 @@ jobs:
           test -f backend/packages.lock.json
           test -f backend.tests/packages.lock.json
           test -f frontend/package-lock.json
+      - name: Metadane raportu
+        id: metadata
+        run: |
+          printf 'report_name=backend-tests-%s-%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+          echo 'REPORT_COMPONENT=backend' >> "$GITHUB_ENV"
+      - name: Odczytaj metadane w kolejnym kroku
+        env:
+          REPORT_NAME: ${{ steps.metadata.outputs.report_name }}
+        run: printf '%s / %s\n' "$REPORT_COMPONENT" "$REPORT_NAME"
       - name: Przygotuj .NET z global.json
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
@@ -86,13 +97,15 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: backend-tests-${{ github.run_id }}-${{ github.run_attempt }}
+          name: ${{ steps.metadata.outputs.report_name }}
           path: TestResults/backend.trx
           retention-days: 7
           if-no-files-found: warn
 
   frontend:
     name: Frontend
+    outputs:
+      report_name: ${{ steps.metadata.outputs.report_name }}
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -122,6 +135,15 @@ jobs:
           test -f backend.tests/packages.lock.json
           test -f frontend/package-lock.json
           test -f .nvmrc
+      - name: Metadane raportu
+        id: metadata
+        run: |
+          printf 'report_name=frontend-tests-%s-%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+          echo 'REPORT_COMPONENT=frontend' >> "$GITHUB_ENV"
+      - name: Odczytaj metadane w kolejnym kroku
+        env:
+          REPORT_NAME: ${{ steps.metadata.outputs.report_name }}
+        run: printf '%s / %s\n' "$REPORT_COMPONENT" "$REPORT_NAME"
       - name: Przygotuj Node z .nvmrc
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -157,7 +179,38 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: frontend-tests-${{ github.run_id }}-${{ github.run_attempt }}
+          name: ${{ steps.metadata.outputs.report_name }}
           path: frontend/test-results/
           retention-days: 7
           if-no-files-found: warn
+
+  summary:
+    name: Reports summary
+    needs: [backend, frontend]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Sprawdz nowy workspace
+        env:
+          BACKEND_REPORT: ${{ needs.backend.outputs.report_name }}
+          FRONTEND_REPORT: ${{ needs.frontend.outputs.report_name }}
+        run: |
+          printf 'Raporty: %s / %s\n' "$BACKEND_REPORT" "$FRONTEND_REPORT"
+          test ! -e TestResults/backend.trx
+          test ! -e frontend/test-results/results.json
+          find . -maxdepth 2 -type f
+      - name: Pobierz raport backendu
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.backend.outputs.report_name }}
+          path: received/backend
+      - name: Pobierz raport frontendu
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: ${{ needs.frontend.outputs.report_name }}
+          path: received/frontend
+      - name: Sprawdz odebrane pliki
+        run: |
+          test -s received/backend/backend.trx
+          test -s received/frontend/junit.xml
+          test -s received/frontend/results.json
+          find received -type f
