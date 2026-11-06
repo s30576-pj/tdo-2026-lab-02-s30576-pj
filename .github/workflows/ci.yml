@@ -1,0 +1,14 @@
+name: Mission Control CI
+
+on: push
+
+jobs:
+  hello:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Powitanie
+        run: printf 'Witaj w laboratorium CI Mission Control!\n'
+      - name: Katalog roboczy i system
+        run: |
+          pwd
+          uname -s
