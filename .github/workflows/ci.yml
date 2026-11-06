@@ -26,6 +26,81 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    name: Changes
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.detect.outputs.backend }}
+      frontend: ${{ steps.detect.outputs.frontend }}
+      count: ${{ steps.detect.outputs.count }}
+    steps:
+      - name: Ustal zakres zmian
+        id: detect
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            let backend = true, frontend = true, count = 0;
+            if (context.eventName === 'pull_request') {
+              const pull_number = context.payload.pull_request.number;
+              const args = {...context.repo, pull_number};
+              const {data: pr} = await github.rest.pulls.get(args);
+              if (pr.head.sha !== context.payload.pull_request.head.sha ||
+                  !Number.isInteger(pr.changed_files) || pr.changed_files < 0 || pr.changed_files > 3000) {
+                throw new Error('Nieprawidlowy lub nieaktualny zakres PR');
+              }
+              const files = await github.paginate(github.rest.pulls.listFiles, {...args, per_page: 100});
+              if (files.length !== pr.changed_files) throw new Error('Niekompletna lista plikow');
+              backend = false; frontend = false; count = files.length;
+              for (const file of files) {
+                if (typeof file.filename !== 'string' || !file.filename ||
+                    (file.status === 'renamed' && typeof file.previous_filename !== 'string')) {
+                  throw new Error('Nieznany format pliku PR');
+                }
+                for (const path of [file.filename, file.previous_filename].filter(Boolean)) {
+                  if (typeof path !== 'string') throw new Error('Nieprawidlowa sciezka');
+                  if (path.startsWith('.github/')) { backend = true; frontend = true; }
+                  else if (/^(backend\/|backend\.tests\/|MissionControl\.slnx$|global\.json$|Directory\.Build\.[^/]+$|NuGet\.Config$)/i.test(path)) backend = true;
+                  else if (/^(frontend\/|\.nvmrc$)/.test(path)) frontend = true;
+                  else if (/^(docs\/|thesis\/|README(?:\.[^/]+)?$|LICENSE(?:\.[^/]+)?$)/i.test(path)) { /* dokumentacja */ }
+                  else { backend = true; frontend = true; }
+                }
+              }
+              const {data: latest} = await github.rest.pulls.get(args);
+              if (latest.head.sha !== pr.head.sha || latest.changed_files !== count) throw new Error('PR zmienil sie podczas detekcji');
+            }
+            core.setOutput('backend', String(backend));
+            core.setOutput('frontend', String(frontend));
+            core.setOutput('count', String(count));
+            core.info(`Pliki: ${count}; backend=${backend}; frontend=${frontend}`);
+
+  comment:
+    name: PR summary
+    needs: changes
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Zaktualizuj podsumowanie PR
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          BACKEND: ${{ needs.changes.outputs.backend }}
+          FRONTEND: ${{ needs.changes.outputs.frontend }}
+          COUNT: ${{ needs.changes.outputs.count }}
+        with:
+          script: |
+            const {BACKEND, FRONTEND, COUNT} = process.env;
+            if (![BACKEND, FRONTEND].every(v => ['true','false'].includes(v)) || !/^\d+$/.test(COUNT)) throw new Error('Bledne metadane');
+            const marker = '<!-- mission-control-ci-summary -->';
+            const body = `${marker}\nPliki: ${COUNT}. Backend: ${BACKEND}; frontend: ${FRONTEND}.`;
+            const args = {...context.repo, issue_number: context.payload.pull_request.number};
+            const comments = await github.paginate(github.rest.issues.listComments, {...args, per_page: 100});
+            const existing = comments.find(c => c.user.login === 'github-actions[bot]' && c.body.includes(marker));
+            if (existing) await github.rest.issues.updateComment({...context.repo, comment_id: existing.id, body});
+            else await github.rest.issues.createComment({...args, body});
+
   backend:
     name: Backend
     outputs:
