@@ -1,0 +1,13 @@
+FROM <obraz .NET SDK 10> AS build
+WORKDIR <katalog>
+COPY <csproj i wygenerowany packages.lock.json>
+RUN <dotnet restore w trybie locked>
+COPY <kod źródłowy>
+RUN <dotnet publish bez ponownego restore>
+
+FROM <obraz ASP.NET Core 10>
+WORKDIR <katalog>
+COPY --from=build <wynik publish> <katalog docelowy>
+EXPOSE <port>
+USER <użytkownik bez root>
+ENTRYPOINT ["dotnet", "MissionControl.Api.dll"]
