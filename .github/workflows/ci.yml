@@ -62,6 +62,16 @@ jobs:
         run: dotnet build MissionControl.slnx --configuration "$BUILD_CONFIGURATION"
       - name: Testy HTTP API z MySQL Testcontainers
         run: dotnet test MissionControl.slnx --configuration "$BUILD_CONFIGURATION" --logger "console;verbosity=detailed"
+      - name: Sprawdz raport TRX po udanych testach
+        run: test -s TestResults/backend.trx
+      - name: Zachowaj raporty backendu
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: backend-tests-${{ github.run_id }}-${{ github.run_attempt }}
+          path: TestResults/backend.trx
+          retention-days: 7
+          if-no-files-found: warn
 
   frontend:
     name: Frontend
@@ -94,3 +104,15 @@ jobs:
       - name: Testy UI bez API
         working-directory: frontend
         run: npm test
+      - name: Sprawdz raporty po udanych testach UI
+        run: |
+          test -s frontend/test-results/junit.xml
+          test -s frontend/test-results/results.json
+      - name: Zachowaj raporty frontendu
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: frontend-tests-${{ github.run_id }}-${{ github.run_attempt }}
+          path: frontend/test-results/
+          retention-days: 7
+          if-no-files-found: warn
