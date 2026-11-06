@@ -1,10 +1,25 @@
 name: Mission Control CI
+run-name: "${{ github.event_name }} / ${{ inputs.configuration || 'Release' }}"
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      configuration:
+        description: Konfiguracja .NET
+        type: choice
+        options: [Release, Debug]
+        default: Release
+      extra_diagnostics:
+        description: Dodatkowe informacje o SDK i Dockerze
+        type: boolean
+        default: false
+
+env:
+  BUILD_CONFIGURATION: ${{ inputs.configuration || 'Release' }}
 
 jobs:
   hello:
@@ -38,3 +53,10 @@ jobs:
           dotnet --version
           node --version
           npm --version
+      - name: Wybrana konfiguracja
+        run: printf 'Konfiguracja: %s\n' "$BUILD_CONFIGURATION"
+      - name: Dodatkowa diagnostyka
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_diagnostics }}
+        run: |
+          dotnet --info
+          docker version
