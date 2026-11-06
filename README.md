@@ -216,3 +216,20 @@ a nie rozwiązaniem zadania CI.
 
 Kod pochodzi z [publicznych materiałów kursu, rewizja `ccc9850`](https://github.com/PJMPR/TDO-lecures/tree/ccc985008e51da48bbdf7a6d5fd889bb65383e60/projects/docker-lab-starter).
 Repozytorium ma niezależną historię i zawiera wyłącznie czysty stan początkowy zajęć 2.
+
+
+## Dziennik wykonania laboratorium
+
+Praca indywidualna, zadania 1–23 według [instrukcji](https://pjmpr.github.io/TDO-lecures/labs/ci/).
+Każdy etap przechodzi przegląd konfiguracji i rzeczywistych wyników przed kolejnym zadaniem.
+Kontrolowane błędy pozostają w historii gałęzi; do main trafia naprawiona wersja.
+
+Przygotowanie lokalne: SDK .NET 10.0.401, Node 26.1.0, działający Docker Linux i udany kontener hello-world.
+Narzędzia są dostępne lokalnie przez skrypt środowiska poza repozytorium; SDK/Node w CI wynikają z global.json/.nvmrc.
+
+| Zadanie | Commit | PR / uruchomienie | Oczekiwany wynik | Wynik i review |
+| --- | --- | --- | --- | --- |
+| 1 | `0b10cc2094253327be1509c5e9cf4b1d40bb8087` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274436477) | Jeden job Ubuntu i dwa własne nazwane kroki | PASS: oba kroki success; log zawiera powitanie, katalog roboczy i Linux. |
+| 2 | `3b6575ee5a6c35af22b006e2db6510822abfe334` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274749350) | Checkout, SDK z plików, bez cache | PASS: .NET 10.0.403 zgodny z latestPatch, Node 26.1.0, npm 11.13.0; kontrola plików i wszystkie kroki przeszły. |
+
+Pierwszy run PR #1: https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275046981 (pull_request, success). Ten kolejny commit README sprawdza aktualizacje checks dla nowej wersji PR-a.
