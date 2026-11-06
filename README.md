@@ -231,3 +231,5 @@ Narzędzia są dostępne lokalnie przez skrypt środowiska poza repozytorium; SD
 | --- | --- | --- | --- | --- |
 | 1 | `0b10cc2094253327be1509c5e9cf4b1d40bb8087` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274436477) | Jeden job Ubuntu i dwa własne nazwane kroki | PASS: oba kroki success; log zawiera powitanie, katalog roboczy i Linux. |
 | 2 | `3b6575ee5a6c35af22b006e2db6510822abfe334` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274749350) | Checkout, SDK z plików, bez cache | PASS: .NET 10.0.403 zgodny z latestPatch, Node 26.1.0, npm 11.13.0; kontrola plików i wszystkie kroki przeszły. |
+
+Pierwszy run PR #1: https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275046981 (pull_request, success). Ten kolejny commit README sprawdza aktualizacje checks dla nowej wersji PR-a.
