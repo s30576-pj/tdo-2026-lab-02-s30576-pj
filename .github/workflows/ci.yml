@@ -20,7 +20,7 @@ on:
 
 env:
   BUILD_CONFIGURATION: ${{ inputs.configuration || 'Release' }}
-  CACHE_NAMESPACE: lab02-v1
+  CACHE_NAMESPACE: lab02-v2
 
 permissions:
   contents: read
