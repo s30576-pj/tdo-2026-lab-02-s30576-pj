@@ -1,0 +1,100 @@
+{
+  "stage": 12,
+  "note": "Historyczny zapis etapu12; aktualna polityka jest dostepna pod adresem ruleset_url i bedzie migrowana przy zmianach required checks.",
+  "ruleset_id": 26724075,
+  "ruleset_url": "https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/rules/26724075",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [],
+      "include": [
+        "refs/heads/main"
+      ]
+    }
+  },
+  "bypass_actors": [],
+  "rules": [
+    {
+      "type": "pull_request",
+      "parameters": {
+        "required_approving_review_count": 0,
+        "dismiss_stale_reviews_on_push": false,
+        "required_reviewers": [],
+        "require_code_owner_review": false,
+        "dismissal_restriction": {
+          "enabled": false,
+          "allowed_actors": []
+        },
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": false,
+        "require_extra_approval_for_unattributed_changes": true,
+        "allowed_merge_methods": [
+          "merge",
+          "squash",
+          "rebase"
+        ]
+      }
+    },
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "strict_required_status_checks_policy": true,
+        "do_not_enforce_on_create": false,
+        "required_status_checks": [
+          {
+            "context": "Backend",
+            "integration_id": 15368
+          },
+          {
+            "context": "Frontend",
+            "integration_id": 15368
+          }
+        ]
+      }
+    },
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "deletion"
+    }
+  ],
+  "direct_push": {
+    "main_before": "a991051e49b48d639cd1b69d1c28364b829cdbb6",
+    "result": "rejected by GitHub rules",
+    "exit_code": 1,
+    "main_after": "a991051e49b48d639cd1b69d1c28364b829cdbb6"
+  },
+  "green_initial": {
+    "merge_state": "CLEAN",
+    "sha": "d80b9c68e2fe8d64f3ee93194adee6f152c52589",
+    "run_url": "https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42287310163"
+  },
+  "controlled_failure": {
+    "merge_state": "BLOCKED",
+    "sha": "9557c544ab37e544c24c5bf963b3bf83a983cc7f",
+    "run_url": "https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42288487752",
+    "checks": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-06T20:28:25Z",
+        "conclusion": "FAILURE",
+        "detailsUrl": "https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42288487752/job/128135416502",
+        "name": "Backend",
+        "startedAt": "2026-11-06T20:27:21Z",
+        "status": "COMPLETED",
+        "workflowName": "Mission Control CI"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-06T20:27:54Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42288487752/job/128135417001",
+        "name": "Frontend",
+        "startedAt": "2026-11-06T20:27:21Z",
+        "status": "COMPLETED",
+        "workflowName": "Mission Control CI"
+      }
+    ]
+  }
+}
