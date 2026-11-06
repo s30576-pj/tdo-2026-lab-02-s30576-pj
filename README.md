@@ -1,23 +1,6 @@
-# Laboratorium 02 — CI i GitHub Actions
+# Laboratorium 02 — GitHub Actions
 
-Publiczny template do drugiego laboratorium Technologie DevOps.
-
-- [Instrukcja laboratorium — 23 zadania](https://pjmpr.github.io/TDO-lecures/labs/ci/)
-- [Wykład — CI, SDLC i GitHub Actions](https://pjmpr.github.io/TDO-lecures/lectures/ci/)
-
-## Jak rozpocząć
-
-1. Wybierz **Use this template → Create a new repository** i utwórz własne **publiczne**
-   repozytorium. W GitHub Classroom zaakceptuj zadanie przekazane przez prowadzącego
-   i sprawdź widoczność oraz uprawnienia zgodnie z instrukcją laboratorium.
-2. Sklonuj **swoje** repozytorium i pracuj z jego korzenia. Aplikacja nie jest zagnieżdżona
-   w dodatkowym katalogu — `MissionControl.slnx`, `backend/` i `frontend/` są od razu dostępne.
-3. Sprawdź wymagania poniżej, wygeneruj trzy lockfiles i zapisz je w commicie.
-4. Wykonuj zadania według instrukcji. Pierwszy workflow i kolejne elementy CI tworzysz samodzielnie.
-
-Template zawiera aplikację i gotowe testy, **bez rozwiązania laboratorium**:
-nie ma workflow, composite actions, reusable workflows ani wygenerowanych lockfiles.
-Nie wprowadzaj swoich rozwiązań do repozytorium template prowadzącego.
+Mission Control: .NET 10, Angular 21 i MySQL. Rozwiązanie zadań z [laboratorium CI](https://pjmpr.github.io/TDO-lecures/labs/ci/).
 
 ## Aplikacja Mission Control
 
@@ -72,10 +55,9 @@ docker info
 `docker version` musi pokazać klienta i działający serwer.
 `NuGet.Config` wskazuje publiczny rejestr NuGet, niezależnie od prywatnych źródeł skonfigurowanych na komputerze.
 
-## 2. Wygenerowanie lockfiles — zadanie studenta
+## 2. Aktualizacja lockfiles
 
-Starter celowo nie zawiera `packages.lock.json` ani `package-lock.json`.
-Nie dodawaj ich do `.gitignore`; są częścią rozwiązania, w przeciwieństwie do `bin`, `obj` i `node_modules`.
+Trzy lockfiles są w repozytorium. Po zmianie zależności zaktualizuj je lokalnie i przejrzyj różnice.
 
 ```bash
 dotnet restore MissionControl.slnx --use-lock-file
@@ -215,7 +197,7 @@ a nie rozwiązaniem zadania CI.
 ## Pochodzenie startera
 
 Kod pochodzi z [publicznych materiałów kursu, rewizja `ccc9850`](https://github.com/PJMPR/TDO-lecures/tree/ccc985008e51da48bbdf7a6d5fd889bb65383e60/projects/docker-lab-starter).
-Repozytorium ma niezależną historię i zawiera wyłącznie czysty stan początkowy zajęć 2.
+Starter uzupełniono o konfigurację i wyniki ćwiczeń CI.
 
 
 ## Dziennik wykonania laboratorium
@@ -240,6 +222,7 @@ Narzędzia są dostępne lokalnie przez skrypt środowiska poza repozytorium; SD
 | 9 | `13be88166d3aaf1f021250aa04bdf1579d1db424` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/7), [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/8), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42280339603), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42280833077), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42281613319), [run 4](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42282206473), [run 5](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42282635307) | Osobne fail/pass regresji aplikacji i nieaktualnego lockfile | PASS: Regresja pustej nazwy: 17 pass/2 fail API -> przywrocona walidacja i 19/19. Sam manifest CLI .29 przy lock .24: npm ci EUSAGE -> wygenerowany lokalnie lock i pelny CI pass. Testy niezmienione, rozne pierwsze nieudane kroki, main zielony. |
 | 10 | `c84de50f7ee41e2d06b62e4c13af12ed5fc60cac` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/9), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42283151729), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42283737430), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42284022816), [run 4](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42284615530) | Raport nieudanego testu dostepny, CI nadal czerwony | PASS: Pobrano poprawne TRX19/19 i UI11/11. Czerwony run: backend failure, upload success, pobrany TRX total19/pass17/fail2 z BadRequest/Created. Naprawa i main success. Dwa rozne artefakty run/attempt, retencja faktycznie7 dni. |
 | 11 | `a991051e49b48d639cd1b69d1c28364b829cdbb6` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/10), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42285316145), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42285676243), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42286389081) | Jawna variable, sama obecnosc fikcyjnego sekretu, minimalny token i testy bez sekretu | PASS: Etykieta w logu, skonfigurowany/brak dla tego samego kodu. Po usunieciu wlasnego sekretu pobrane raporty19/19+11/11, CI success. Oba jobs: Contents read i Metadata read. Sekret tylko w env jednego kroku, nowa fikcyjna wartosc odtworzona, main success. |
+| 12 | `b6e2e074ec404f7b02bce8339883dd5a9f65c791` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/11), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42287310163), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42288487752), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42289172604), [run 4](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42289812969) | GH013 dla direct push; czerwony PR BLOCKED; poprawka CLEAN bez bypass. | PASS: Aktywne required PR+Backend+Frontend, bypass pusty, Classroom zachowane; wszystkie trzy stany potwierdzone; main success. |
 
 <!-- LAB-REVIEW-TABLE:END -->
 
@@ -249,8 +232,21 @@ Stan poczatkowy po wygenerowaniu lockfiles: npm audit zglosil 23 pozycje (18 mod
 
 Po zgodnej poprawce CLI 21.2.29 (zadanie 9): lokalny npm ci/build i 11/11 UI pass; audyt zglosil 21 pozycji (19 moderate, 2 high). Pozostale deklaracje Angulara zachowano.
 
-Kontrola zadania 12 wykorzystuje osobna galaz z niegrozna zmiana README i rzeczywisty push HEAD:main; main ma byc zmieniany przez PR z wymaganymi checks.
+Bezpośredni push na main odrzucono; zmiany przechodzą przez PR z wymaganymi checks.
 
 ## Ochrona main - dowody etapu 12
 
 [Aktywna regula](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/rules/26724075) oraz [historyczny zapis konfiguracji i stanow PR](docs/evidence/main-protection-stage12.json). Bezposredni push zostal odrzucony przez GH013 i nie zmienil main. PR #11 byl CLEAN po zielonych checks, a po kontrolowanej regresji BLOCKED przy Backend FAILURE i Frontend SUCCESS.
+
+## Cache zależności
+
+Pomiary manualne na tej samej gałęzi. Brak restore-keys; miss oznacza brak przywrócenia. Pełne klucze i logi: [cache-stage13.json](docs/evidence/cache-stage13.json).
+
+| Próba | npm ci | NuGet restore | Exact hit | Run |
+| --- | --- | --- | --- | --- |
+| cold | 9 s | 6 s | oba false | [run](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42290040632) |
+| warm | 7 s | 4 s | oba true | [run](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42290187724) |
+| newlock | 9 s | 6 s | oba false | [run](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42290532119) |
+| namespace | 7 s | 6 s | oba false | [run](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42290717724) |
+
+Każdy run wykonał instalację, build oraz 19 testów API i 11 UI. Wersje do próby nowego lockfile: OpenAPI 10.0.14 i @angular/build 21.2.29. Po aktualizacji npm audit: 18 moderate, 0 high, 0 critical.
