@@ -22,37 +22,32 @@ env:
   BUILD_CONFIGURATION: ${{ inputs.configuration || 'Release' }}
 
 jobs:
-  hello:
+  backend:
+    name: Backend
     runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Pobierz kod
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Sprawdz trzy lockfiles
+        run: |
+          test -f backend/packages.lock.json
+          test -f backend.tests/packages.lock.json
+          test -f frontend/package-lock.json
       - name: Przygotuj .NET z global.json
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
           global-json-file: global.json
           cache: false
-      - name: Przygotuj Node z .nvmrc
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .nvmrc
-          package-manager-cache: false
-      - name: Powitanie
-        run: printf 'Witaj w laboratorium CI Mission Control!\n'
-      - name: Katalog roboczy i system
-        run: |
-          pwd
-          uname -s
-      - name: Sprawdz pliki projektu i wersje narzedzi
+      - name: Sprawdz SDK i Docker
         run: |
           test -f MissionControl.slnx
-          test -f global.json
-          test -f .nvmrc
           dotnet --version
-          node --version
-          npm --version
+          docker version
       - name: Wybrana konfiguracja
         run: |
           printf 'Konfiguracja: %s\n' "$BUILD_CONFIGURATION"
@@ -61,3 +56,9 @@ jobs:
         run: |
           dotnet --info
           docker version
+      - name: Locked restore backendu
+        run: dotnet restore MissionControl.slnx --locked-mode
+      - name: Build backendu
+        run: dotnet build MissionControl.slnx --configuration "$BUILD_CONFIGURATION"
+      - name: Testy HTTP API z MySQL Testcontainers
+        run: dotnet test MissionControl.slnx --configuration "$BUILD_CONFIGURATION" --logger "console;verbosity=detailed"
