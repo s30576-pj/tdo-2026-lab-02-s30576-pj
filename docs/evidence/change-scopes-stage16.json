@@ -1,0 +1,139 @@
+[
+  {
+    "label": "workflow",
+    "pr": 14,
+    "sha": "2b2c84e2935a5ef08204c3012616e249f939ae4a",
+    "run": 42292236749,
+    "backend": "true",
+    "frontend": "true",
+    "log": "Changes\tUstal zakres zmian\t2026-11-06T20:54:16.1477121Z Pliki: 2; backend=true; frontend=true",
+    "commentIds": [
+      6695252700
+    ],
+    "commentConclusion": "success",
+    "files": [
+      {
+        "filename": ".github/workflows/ci.yml",
+        "previous_filename": null,
+        "status": "modified"
+      },
+      {
+        "filename": "README.md",
+        "previous_filename": null,
+        "status": "modified"
+      }
+    ]
+  },
+  {
+    "label": "docs",
+    "pr": 15,
+    "sha": "fc7b5a3f07b1781fc1f0218e166cb9ef5ef285c8",
+    "run": 42292490582,
+    "backend": "false",
+    "frontend": "false",
+    "log": "Changes\tUstal zakres zmian\t2026-11-06T20:56:08.3772050Z Pliki: 1; backend=false; frontend=false",
+    "commentIds": [
+      6695319004
+    ],
+    "commentConclusion": "success",
+    "files": [
+      {
+        "filename": "docs/change-scopes.md",
+        "previous_filename": null,
+        "status": "added"
+      }
+    ]
+  },
+  {
+    "label": "backend",
+    "pr": 15,
+    "sha": "5f7e7cb087ee5f72ddc15a3a964db4946e8ba016",
+    "run": 42293187520,
+    "backend": "true",
+    "frontend": "false",
+    "log": "2026-11-06T21:01:11.7226079Z Pliki: 1; backend=true; frontend=false",
+    "commentIds": [
+      6695319004
+    ],
+    "commentConclusion": "success",
+    "files": [
+      {
+        "filename": "backend/ci-scope.txt",
+        "previous_filename": null,
+        "status": "added"
+      }
+    ]
+  },
+  {
+    "label": "frontend",
+    "pr": 15,
+    "sha": "013275b186dc21d0d1787389f6b6d1d1f00d9db7",
+    "run": 42293407045,
+    "backend": "false",
+    "frontend": "true",
+    "log": "2026-11-06T21:02:45.1106013Z Pliki: 1; backend=false; frontend=true",
+    "commentIds": [
+      6695319004
+    ],
+    "commentConclusion": "success",
+    "files": [
+      {
+        "filename": "frontend/ci-scope.txt",
+        "previous_filename": null,
+        "status": "added"
+      }
+    ]
+  },
+  {
+    "label": "rename",
+    "pr": 15,
+    "sha": "89ff84042263e19aad3726ef62bfec170d1b1117",
+    "run": 42293476344,
+    "backend": "true",
+    "frontend": "false",
+    "log": "2026-11-06T21:03:12.9040934Z Pliki: 1; backend=true; frontend=false",
+    "commentIds": [
+      6695319004
+    ],
+    "commentConclusion": "success",
+    "files": [
+      {
+        "filename": "docs/appsettings-scope.json",
+        "previous_filename": "backend/appsettings.json",
+        "status": "renamed"
+      }
+    ]
+  },
+  {
+    "label": "fork",
+    "pr": 16,
+    "sha": "fc7b5a3f07b1781fc1f0218e166cb9ef5ef285c8",
+    "run": 42292614082,
+    "backend": "false",
+    "frontend": "false",
+    "log": "Changes\tUstal zakres zmian\t2026-11-06T20:57:04.8986199Z Pliki: 1; backend=false; frontend=false",
+    "commentIds": [],
+    "commentConclusion": "skipped",
+    "files": [
+      {
+        "filename": "docs/change-scopes.md",
+        "previous_filename": null,
+        "status": "added"
+      }
+    ]
+  },
+  {
+    "label": "final",
+    "pr": 15,
+    "sha": "4bacb386da021e8c93e7f3a70b266d4a4fa78887",
+    "run": 42293545092,
+    "backend": "false",
+    "frontend": "false",
+    "log": "2026-11-06T21:03:43.4356067Z Pliki: 0; backend=false; frontend=false",
+    "commentIds": [
+      6695319004
+    ],
+    "commentConclusion": "success",
+    "files": []
+  }
+]
