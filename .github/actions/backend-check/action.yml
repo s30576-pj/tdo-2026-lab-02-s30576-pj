@@ -1,0 +1,54 @@
+name: Backend check
+description: Locked restore, build i testy HTTP API
+inputs:
+  configuration:
+    description: Debug lub Release
+    required: true
+    default: Release
+outputs:
+  report_name:
+    description: Nazwa artefaktu TRX
+    value: ${{ steps.metadata.outputs.report_name }}
+runs:
+  using: composite
+  steps:
+    - name: Metadane raportu
+      id: metadata
+      shell: bash
+      run: |
+        printf 'report_name=backend-tests-%s-%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+        echo 'REPORT_COMPONENT=backend' >> "$GITHUB_ENV"
+    - name: Sprawdz konfiguracje i metadane
+      shell: bash
+      env:
+        CONFIGURATION: ${{ inputs.configuration }}
+        REPORT_NAME: ${{ steps.metadata.outputs.report_name }}
+      run: |
+        case "$CONFIGURATION" in
+          Debug|Release) ;;
+          *) echo '::error::Konfiguracja musi byc Debug lub Release'; exit 1 ;;
+        esac
+        printf '%s / %s\n' "$REPORT_COMPONENT" "$REPORT_NAME"
+    - name: Sprawdz lockfiles
+      shell: bash
+      run: |
+        test -s backend/packages.lock.json
+        test -s backend.tests/packages.lock.json
+        test -s frontend/package-lock.json
+        test -s MissionControl.slnx
+    - name: Locked restore backendu
+      shell: bash
+      run: dotnet restore MissionControl.slnx --locked-mode
+    - name: Build backendu
+      shell: bash
+      env:
+        CONFIGURATION: ${{ inputs.configuration }}
+      run: dotnet build MissionControl.slnx --configuration "$CONFIGURATION"
+    - name: Testy HTTP API z MySQL Testcontainers
+      shell: bash
+      env:
+        CONFIGURATION: ${{ inputs.configuration }}
+      run: dotnet test MissionControl.slnx --configuration "$CONFIGURATION" --logger "console;verbosity=detailed"
+    - name: Sprawdz raport TRX
+      shell: bash
+      run: test -s TestResults/backend.trx

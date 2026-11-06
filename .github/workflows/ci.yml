@@ -105,7 +105,7 @@ jobs:
   backend:
     name: Backend
     outputs:
-      report_name: ${{ steps.metadata.outputs.report_name }}
+      report_name: ${{ steps.check.outputs.report_name }}
     runs-on: ubuntu-24.04
     defaults:
       run:
@@ -121,15 +121,6 @@ jobs:
           test -f backend/packages.lock.json
           test -f backend.tests/packages.lock.json
           test -f frontend/package-lock.json
-      - name: Metadane raportu
-        id: metadata
-        run: |
-          printf 'report_name=backend-tests-%s-%s\n' "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
-          echo 'REPORT_COMPONENT=backend' >> "$GITHUB_ENV"
-      - name: Odczytaj metadane w kolejnym kroku
-        env:
-          REPORT_NAME: ${{ steps.metadata.outputs.report_name }}
-        run: printf '%s / %s\n' "$REPORT_COMPONENT" "$REPORT_NAME"
       - name: Przygotuj .NET z global.json
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
@@ -161,19 +152,16 @@ jobs:
         run: |
           dotnet --info
           docker version
-      - name: Locked restore backendu
-        run: dotnet restore MissionControl.slnx --locked-mode
-      - name: Build backendu
-        run: dotnet build MissionControl.slnx --configuration "$BUILD_CONFIGURATION"
-      - name: Testy HTTP API z MySQL Testcontainers
-        run: dotnet test MissionControl.slnx --configuration "$BUILD_CONFIGURATION" --logger "console;verbosity=detailed"
-      - name: Sprawdz raport TRX po udanych testach
-        run: test -s TestResults/backend.trx
+      - name: Sprawdz backend
+        id: check
+        uses: ./.github/actions/backend-check
+        with:
+          configuration: ${{ env.BUILD_CONFIGURATION }}
       - name: Zachowaj raporty backendu
         if: ${{ always() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: ${{ steps.metadata.outputs.report_name }}
+          name: ${{ steps.check.outputs.report_name }}
           path: TestResults/backend.trx
           retention-days: 7
           if-no-files-found: warn
