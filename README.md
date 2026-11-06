@@ -229,9 +229,9 @@ Narzędzia są dostępne lokalnie przez skrypt środowiska poza repozytorium; SD
 
 | Zadanie | Commit | PR / uruchomienie | Oczekiwany wynik | Wynik i review |
 | --- | --- | --- | --- | --- |
-| 1 | `0b10cc2094253327be1509c5e9cf4b1d40bb8087` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274436477) | Jeden job Ubuntu i dwa własne nazwane kroki | PASS: oba kroki success; log zawiera powitanie, katalog roboczy i Linux. |
-| 2 | `3b6575ee5a6c35af22b006e2db6510822abfe334` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274749350) | Checkout, SDK z plików, bez cache | PASS: .NET 10.0.403 zgodny z latestPatch, Node 26.1.0, npm 11.13.0; kontrola plików i wszystkie kroki przeszły. |
-
-Pierwszy run PR #1: https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275046981 (pull_request, success). Ten kolejny commit README sprawdza aktualizacje checks dla nowej wersji PR-a.
-
+| 1 | `0b10cc2094253327be1509c5e9cf4b1d40bb8087` | [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274436477) | push, jeden job Ubuntu, dwa nazwane kroki, sukces | PASS: hello success; powitanie, katalog i Linux obecne w logach; oba wlasne kroki success |
+| 2 | `3b6575ee5a6c35af22b006e2db6510822abfe334` | [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274749350) | checkout i SDK z plikow startera, bez cache | PASS: success; dotnet 10.0.403 zgodny z latestPatch, Node v26.1.0, npm 11.13.0, oba mechanizmy cache jawnie wylaczone |
 | 3 | `eed96bdf2b974370b5fa4b678d91fe286160cde9` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/1), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275046981), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275175248), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275308752) | PR do main, aktualizacja checks, osobny push/main | PASS: Oba PR runy i run po merge success; brak dodatkowego push na feature. |
+| 4 | `522ad1054d4c2c0d5184bfd882cc9e059f2b5832` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/2), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42276072324), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42276273678), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42276359635) | PR Release; reczne Release/false i Debug/true po bootstrapie main | PASS: Wszystkie success; konfiguracje w nazwach i logach zgodne, diagnostyka skipped/success. Wczesniejszy blad skladni YAML poprawiono osobnym commitem i sprawdzono actionlint. |
+
+<!-- LAB-REVIEW-TABLE:END -->
