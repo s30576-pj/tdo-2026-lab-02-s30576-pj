@@ -250,3 +250,7 @@ Stan poczatkowy po wygenerowaniu lockfiles: npm audit zglosil 23 pozycje (18 mod
 Po zgodnej poprawce CLI 21.2.29 (zadanie 9): lokalny npm ci/build i 11/11 UI pass; audyt zglosil 21 pozycji (19 moderate, 2 high). Pozostale deklaracje Angulara zachowano.
 
 Kontrola zadania 12 wykorzystuje osobna galaz z niegrozna zmiana README i rzeczywisty push HEAD:main; main ma byc zmieniany przez PR z wymaganymi checks.
+
+## Ochrona main - dowody etapu 12
+
+[Aktywna regula](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/rules/26724075) oraz [historyczny zapis konfiguracji i stanow PR](docs/evidence/main-protection-stage12.json). Bezposredni push zostal odrzucony przez GH013 i nie zmienil main. PR #11 byl CLEAN po zielonych checks, a po kontrolowanej regresji BLOCKED przy Backend FAILURE i Frontend SUCCESS.
