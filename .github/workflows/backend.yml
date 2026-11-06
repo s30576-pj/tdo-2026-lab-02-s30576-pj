@@ -1,0 +1,95 @@
+name: Backend workflow
+on:
+  workflow_call:
+    inputs:
+      configuration:
+        type: string
+        required: true
+      publish_reports:
+        type: boolean
+        default: true
+      report_retention_days:
+        type: number
+        default: 7
+      extra_diagnostics:
+        type: boolean
+        default: false
+    outputs:
+      report_name:
+        description: Nazwa raportu backendu
+        value: ${{ jobs.test.outputs.report_name }}
+permissions:
+  contents: read
+env:
+  CACHE_NAMESPACE: lab02-v2
+jobs:
+  test:
+    name: Backend
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        shell: bash
+    outputs:
+      report_name: ${{ steps.check.outputs.report_name }}
+    steps:
+      - name: Sprawdz kontrakt wejscia
+        id: contract
+        env:
+          CONFIGURATION: ${{ inputs.configuration }}
+          RETENTION: ${{ inputs.report_retention_days }}
+        run: |
+          case "$CONFIGURATION" in
+            Debug|Release) ;;
+            *) echo '::error::Konfiguracja musi byc Debug lub Release'; exit 1 ;;
+          esac
+          [[ "$RETENTION" =~ ^([1-9]|[1-8][0-9]|90)$ ]] || { echo '::error::Retencja musi byc calkowita od 1 do 90 dni'; exit 1; }
+      - name: Pobierz kod
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Sprawdz pliki przed cache
+        run: |
+          test -s global.json
+          test -s backend/packages.lock.json
+          test -s backend.tests/packages.lock.json
+          test -s frontend/package-lock.json
+      - name: Przygotuj .NET z global.json
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          global-json-file: global.json
+          cache: false
+      - name: Sprawdz SDK i Docker
+        run: |
+          dotnet --version
+          docker version
+      - name: Wersja runtime do klucza
+        id: runtime
+        run: echo "version=$(dotnet --version)" >> "$GITHUB_OUTPUT"
+      - name: Cache NuGet
+        id: cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.nuget/packages
+          key: ${{ env.CACHE_NAMESPACE }}-${{ runner.os }}-${{ runner.arch }}-dotnet-${{ steps.runtime.outputs.version }}-${{ hashFiles('backend/packages.lock.json', 'backend.tests/packages.lock.json') }}
+      - name: Wynik cache NuGet
+        env:
+          EXACT_HIT: ${{ steps.cache.outputs.cache-hit == 'true' }}
+        run: printf 'Exact cache hit = %s\n' "$EXACT_HIT"
+      - name: Dodatkowa diagnostyka
+        if: ${{ inputs.extra_diagnostics }}
+        run: |
+          dotnet --info
+          docker version
+      - name: Sprawdz backend
+        id: check
+        uses: ./.github/actions/backend-check
+        with:
+          configuration: ${{ inputs.configuration }}
+      - name: Zachowaj raporty backendu
+        if: ${{ always() && inputs.publish_reports && steps.contract.outcome == 'success' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ steps.check.outputs.report_name || format('backend-tests-{0}-{1}', github.run_id, github.run_attempt) }}
+          path: TestResults/backend.trx
+          retention-days: ${{ inputs.report_retention_days }}
+          if-no-files-found: warn

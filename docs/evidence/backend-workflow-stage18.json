@@ -1,0 +1,20 @@
+{
+  "regression": {
+    "sha": "daf5b91c255a93820b990c25b02e7ee237b5daa6",
+    "check": "Backend / Backend",
+    "mergeState": "BLOCKED",
+    "result": "failure",
+    "run": 42296082494
+  },
+  "bypass": [],
+  "positive": {
+    "sha": "b4b10773f8fd84229bcd2546bf11f9c5fcb6fa5e",
+    "run": 42295692005
+  },
+  "retentionDays": 7,
+  "requiredChecks": [
+    "Backend / Backend",
+    "Frontend"
+  ],
+  "ruleset": 26724075
+}
