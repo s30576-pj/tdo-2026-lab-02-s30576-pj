@@ -1,0 +1,21 @@
+{
+  "positive": {
+    "run": 42294132840,
+    "sha": "78f140f31c69d1f0dfd163f4bc3d351569f10b43"
+  },
+  "regression": {
+    "total": 19,
+    "workflow": "failure",
+    "upload": "success",
+    "run": 42294862799,
+    "sha": "3dec49da92138e3446c83b8d07110da48fb94a3c",
+    "failed": 2,
+    "passed": 17
+  },
+  "invalidInput": {
+    "run": 42294497893,
+    "sha": "0a1a8616747320b1ae18a4ed80f35ad78ce531cc",
+    "mergeState": "BLOCKED",
+    "error": "Konfiguracja musi byc Debug lub Release"
+  }
+}
