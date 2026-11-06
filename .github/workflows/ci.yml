@@ -39,11 +39,6 @@ jobs:
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
-      - name: Kontrolowany blad konfiguracji CI
-        run: |
-          printf '::warning file=README.md,line=1::Cwiczeniowe ostrzezenie konfiguracji CI\n'
-          printf '::error file=README.md,line=1::Kontrolowany blad konfiguracji CI\n'
-          exit 1
       - name: Powitanie
         run: printf 'Witaj w laboratorium CI Mission Control!\n'
       - name: Katalog roboczy i system
