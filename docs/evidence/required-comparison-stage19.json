@@ -1,0 +1,90 @@
+[
+  {
+    "label": "zero",
+    "sha": "6d15f90c3bef5a009a6b47a484f3f87c125eb106",
+    "pr": 20,
+    "mergeState": "BLOCKED",
+    "outcomes": [],
+    "comparisonRuns": [],
+    "applicationRun": "42297078853",
+    "otherRequiredChecks": "Backend / Backend=success, Frontend=success"
+  },
+  {
+    "label": "one",
+    "sha": "d578d509f795d4e4b7447437a670412301a8258c",
+    "pr": 20,
+    "mergeState": "CLEAN",
+    "outcomes": [
+      "success"
+    ],
+    "comparisonRuns": [
+      "42297678865"
+    ],
+    "applicationRun": "42297678716",
+    "otherRequiredChecks": "Backend / Backend=success, Frontend=success"
+  },
+  {
+    "label": "two-pending",
+    "sha": "add3dc34f36ea4b20e93e3fa251c5e5dc471a835",
+    "pr": 20,
+    "mergeState": "BLOCKED",
+    "outcomes": [
+      "pending",
+      "success"
+    ],
+    "comparisonRuns": [
+      "42297901865",
+      "42297901819"
+    ],
+    "applicationRun": "42297901910",
+    "otherRequiredChecks": "Backend / Backend=success, Frontend=success"
+  },
+  {
+    "label": "two-success",
+    "sha": "add3dc34f36ea4b20e93e3fa251c5e5dc471a835",
+    "pr": 20,
+    "mergeState": "CLEAN",
+    "outcomes": [
+      "success",
+      "success"
+    ],
+    "comparisonRuns": [
+      "42297901819",
+      "42297901865"
+    ],
+    "applicationRun": "42297901910",
+    "otherRequiredChecks": "Backend / Backend=success, Frontend=success"
+  },
+  {
+    "label": "two-failure",
+    "sha": "7cf443048eb6f5213fc66fdb350051a65b1720fc",
+    "pr": 20,
+    "mergeState": "BLOCKED",
+    "outcomes": [
+      "failure",
+      "success"
+    ],
+    "comparisonRuns": [
+      "42298363257",
+      "42298363196"
+    ],
+    "applicationRun": "42298363585",
+    "otherRequiredChecks": "Backend / Backend=success, Frontend=success"
+  },
+  {
+    "label": "two-fixed",
+    "sha": "ab9cdb5edec258dd722635b4b93b5215268edc9c",
+    "pr": 20,
+    "mergeState": "CLEAN",
+    "outcomes": [
+      "success",
+      "success"
+    ],
+    "comparisonRuns": [
+      "42298575778",
+      "42298575785"
+    ],
+    "applicationRun": "42298576045",
+    "otherRequiredChecks": "Backend / Backend=success, Frontend=success"
+  }
+]
