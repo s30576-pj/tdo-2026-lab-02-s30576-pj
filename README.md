@@ -233,3 +233,5 @@ Narzędzia są dostępne lokalnie przez skrypt środowiska poza repozytorium; SD
 | 2 | `3b6575ee5a6c35af22b006e2db6510822abfe334` | [push](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42274749350) | Checkout, SDK z plików, bez cache | PASS: .NET 10.0.403 zgodny z latestPatch, Node 26.1.0, npm 11.13.0; kontrola plików i wszystkie kroki przeszły. |
 
 Pierwszy run PR #1: https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275046981 (pull_request, success). Ten kolejny commit README sprawdza aktualizacje checks dla nowej wersji PR-a.
+
+| 3 | `eed96bdf2b974370b5fa4b678d91fe286160cde9` | [PR](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/pull/1), [run 1](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275046981), [run 2](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275175248), [run 3](https://github.com/shihan-project/tdo-2026-lab-02-s30576-pj/actions/runs/42275308752) | PR do main, aktualizacja checks, osobny push/main | PASS: Oba PR runy i run po merge success; brak dodatkowego push na feature. |
