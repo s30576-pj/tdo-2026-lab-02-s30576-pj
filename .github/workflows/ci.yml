@@ -54,7 +54,8 @@ jobs:
           node --version
           npm --version
       - name: Wybrana konfiguracja
-        run: printf 'Konfiguracja: %s\n' "$BUILD_CONFIGURATION"
+        run: |
+          printf 'Konfiguracja: %s\n' "$BUILD_CONFIGURATION"
       - name: Dodatkowa diagnostyka
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_diagnostics }}
         run: |
