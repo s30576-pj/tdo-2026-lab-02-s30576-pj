@@ -1,0 +1,60 @@
+{
+  "scriptSha256": "077d16110afc763f4cecebd70ffd9802db18f26214e45e38c2291144f09bb60d",
+  "cases": [
+    {
+      "name": "both",
+      "allowed": true,
+      "exitCode": 0
+    },
+    {
+      "name": "none",
+      "allowed": true,
+      "exitCode": 0
+    },
+    {
+      "name": "backend",
+      "allowed": true,
+      "exitCode": 0
+    },
+    {
+      "name": "frontend",
+      "allowed": true,
+      "exitCode": 0
+    },
+    {
+      "name": "detector failure",
+      "allowed": false,
+      "exitCode": 1
+    },
+    {
+      "name": "missing flag",
+      "allowed": false,
+      "exitCode": 1
+    },
+    {
+      "name": "unknown flag",
+      "allowed": false,
+      "exitCode": 1
+    },
+    {
+      "name": "failed component",
+      "allowed": false,
+      "exitCode": 1
+    },
+    {
+      "name": "unexpected skip",
+      "allowed": false,
+      "exitCode": 1
+    },
+    {
+      "name": "cancelled component",
+      "allowed": false,
+      "exitCode": 1
+    },
+    {
+      "name": "unexpected work",
+      "allowed": false,
+      "exitCode": 1
+    }
+  ]
+}
