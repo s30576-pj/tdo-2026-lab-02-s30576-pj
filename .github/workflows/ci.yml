@@ -55,6 +55,7 @@ jobs:
               backend = false; frontend = false; count = files.length;
               for (const file of files) {
                 if (typeof file.filename !== 'string' || !file.filename ||
+                    !['added','removed','modified','renamed','copied','changed','unchanged'].includes(file.status) ||
                     (file.status === 'renamed' && typeof file.previous_filename !== 'string')) {
                   throw new Error('Nieznany format pliku PR');
                 }
@@ -97,7 +98,7 @@ jobs:
             const body = `${marker}\nPliki: ${COUNT}. Backend: ${BACKEND}; frontend: ${FRONTEND}.`;
             const args = {...context.repo, issue_number: context.payload.pull_request.number};
             const comments = await github.paginate(github.rest.issues.listComments, {...args, per_page: 100});
-            const existing = comments.find(c => c.user.login === 'github-actions[bot]' && c.body.includes(marker));
+            const existing = comments.find(c => c.user.login === 'github-actions[bot]' && typeof c.body === 'string' && c.body.includes(marker));
             if (existing) await github.rest.issues.updateComment({...context.repo, comment_id: existing.id, body});
             else await github.rest.issues.createComment({...args, body});
 
