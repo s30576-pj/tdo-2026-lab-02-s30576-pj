@@ -21,6 +21,9 @@ on:
 env:
   BUILD_CONFIGURATION: ${{ inputs.configuration || 'Release' }}
 
+permissions:
+  contents: read
+
 jobs:
   backend:
     name: Backend
@@ -84,6 +87,20 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+      - name: Jawna etykieta projektu
+        env:
+          LAB_LABEL: ${{ vars.LAB_LABEL }}
+        run: |
+          printf 'Projekt: %s\n' "$LAB_LABEL"
+      - name: Sprawdz tylko obecnosc sekretu cwiczeniowego
+        env:
+          LAB_DEMO_TOKEN: ${{ secrets.LAB_DEMO_TOKEN }}
+        run: |
+          if [ -n "$LAB_DEMO_TOKEN" ]; then
+            printf 'Sekret cwiczeniowy skonfigurowany\n'
+          else
+            printf 'Brak sekretu; testy nie wymagaja go do pracy\n'
+          fi
       - name: Sprawdz trzy lockfiles i wersje Node
         run: |
           test -f backend/packages.lock.json
