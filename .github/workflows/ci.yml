@@ -6,9 +6,31 @@ jobs:
   hello:
     runs-on: ubuntu-24.04
     steps:
+      - name: Pobierz kod
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Przygotuj .NET z global.json
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          global-json-file: global.json
+          cache: false
+      - name: Przygotuj Node z .nvmrc
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
       - name: Powitanie
         run: printf 'Witaj w laboratorium CI Mission Control!\n'
       - name: Katalog roboczy i system
         run: |
           pwd
           uname -s
+      - name: Sprawdz pliki projektu i wersje narzedzi
+        run: |
+          test -f MissionControl.slnx
+          test -f global.json
+          test -f .nvmrc
+          dotnet --version
+          node --version
+          npm --version
